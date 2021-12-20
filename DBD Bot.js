@@ -22,33 +22,20 @@ function onMessage(msg) {
   {
     return;
   }
-  if(msg.content.startsWith("/봇"))
+  if(msg.content.startsWith(".봇"))
   {
     msg.reply('안뇽!');
   }
-  else if(msg.content.startsWith("/셋"))
+  else if(msg.content.startsWith(".셋"))
   {
     key = msg.content.split(' ')[1];
-    value = msg.content.replace('/셋 '+key+' ', '');
+    value = msg.content.replace('.셋 '+key+' ', '');
     obj = Database.readObject(dataFile);
     obj[key] = value;
     Database.writeObject(dataFile, obj);
     msg.reply(key + ' 입력완료!');
   }
-  else if(msg.content.startsWith("/겟"))
-  {
-    key = msg.content.split(' ')[1];
-    obj = Database.readObject(dataFile);
-    if(obj[key] == undefined)
-    {
-      msg.reply('Key Error!');
-    }
-    else
-    {
-      msg.reply(obj[key]);
-    }
-  }
-  else if(msg.content.startsWith("/키삭제"))
+  else if(msg.content.startsWith(".키삭제"))
   {
     key = msg.content.split(' ')[1];
     obj = Database.readObject(dataFile);
@@ -56,7 +43,7 @@ function onMessage(msg) {
     Database.writeObject(dataFile, obj);
     msg.reply(key + ' 삭제완료!');
   }
-  else if(msg.content.startsWith("/국주"))
+  else if(msg.content.startsWith(".국주"))
   {
     key = msg.content.split(' ')[1];
     var resp = org.jsoup.Jsoup.connect('https://search.naver.com/search.naver?query='+key+'%20주가').get();
@@ -81,7 +68,7 @@ function onMessage(msg) {
       msg.reply(name + " : " + price +"원" + " " + "(" + v + "원, "+ variance.substring(1, variance.length-1) + ")");
     }
   }
-  else if(msg.content.startsWith("/미주"))
+  else if(msg.content.startsWith(".미주"))
   {
     key = msg.content.split(' ')[1];
     var resp = org.jsoup.Jsoup.connect('https://search.naver.com/search.naver?query='+key+'%20주가').get();
@@ -114,7 +101,7 @@ function onMessage(msg) {
       msg.reply(name + " : " + price +"$" + " " + "(" + v + "$, "+ variance + ")");
     }
   }
-  else if(msg.content.startsWith("/코인"))
+  else if(msg.content.startsWith(".코인"))
   {
     key = msg.content.split(' ')[1];
     var resp = org.jsoup.Jsoup.connect('https://search.daum.net/search?q='+key).get();
@@ -128,12 +115,12 @@ function onMessage(msg) {
     else v = '+'+v;
     msg.reply(name.split(" ")[0] + " ("+name.split(" ")[1] + ")" + " : " + price + " " + "(" + v +"원, "+variance + ")");
   }
-  else if(msg.content.startsWith("/네이버"))
+  else if(msg.content.startsWith(".네이버"))
   {
-    key = msg.content.replace("/네이버","");
+    key = msg.content.replace(".네이버 ","");
     msg.reply("https://m.search.naver.com/search.naver?query="+key.replace(/ /gi, "%20"));
   }
-  else if(msg.content.startsWith("/키리스트"))
+  else if(msg.content.startsWith(".키리스트"))
   {
     obj = Database.readObject(dataFile);
     var ret = '';
@@ -149,10 +136,27 @@ function onMessage(msg) {
       msg.reply(ret);
     }
   }
-  else if(msg.content.startsWith("/깃"))
+  else if(msg.content.startsWith(".깃"))
   {
     msg.reply("https://github.com/dongu4/DBD-Bot");
   }
+  else if(msg.content.startsWith("."))
+  {
+    if(!(msg.content.replace(/[~!?@#$%^&*().,]/gi, '')==''))
+    {
+      key = msg.content.substring(1, msg.content.length);
+      obj = Database.readObject(dataFile);
+      if(obj[key] == undefined)
+      {
+        msg.reply('Key Error!');
+      }
+      else
+      {
+        msg.reply(obj[key]);
+      }
+    }
+  }
+  
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
