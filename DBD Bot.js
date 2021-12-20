@@ -148,6 +148,13 @@ function onMessage(msg) {
 		obj = Database.readObject(dataFile);
 		msg.reply(JSON.stringify(obj, null, "\t"));
 	}
+	else if(msg.content.startsWith(".랜덤"))
+	{
+		num = msg.content.split(' ')[1];
+		num *= 1;
+		ran = Math.floor(Math.random() * (num)) + 1;
+		msg.reply(ran+"");
+	}
 	else if(msg.content.startsWith("."))
 	{
 		if(!(msg.content.replace(/[~!?@#$%^&*().,]/gi, '')==''))
