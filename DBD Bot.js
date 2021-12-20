@@ -143,9 +143,10 @@ function onMessage(msg) {
 			msg.reply(ret);
 		}
 	}
-	else if(msg.content.startsWith(".깃"))
+	else if(msg.content.startsWith(".올리스트"))
 	{
-		msg.reply("https://github.com/dongu4/DBD-Bot");
+		obj = Database.readObject(dataFile);
+		msg.reply(JSON.stringify(obj, null, "\t"));
 	}
 	else if(msg.content.startsWith("."))
 	{
