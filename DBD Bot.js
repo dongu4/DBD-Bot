@@ -158,7 +158,14 @@ function onMessage(msg) {
 	else if(msg.content.startsWith(".계산"))
 	{
 		key = msg.content.replace(".계산 ","");
-		msg.reply(eval(key));
+		if(!(key.replace(/[\^0123456789()+-=*/%]/gi, '')==''))
+		{
+			msg.reply("Key Error!");
+		}
+		else 
+		{
+			msg.reply(eval(key));
+		}
 	}	
 	else if(msg.content.startsWith("."))
 	{
