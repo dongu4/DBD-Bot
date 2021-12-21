@@ -155,6 +155,11 @@ function onMessage(msg) {
 		ran = Math.floor(Math.random() * (num)) + 1;
 		msg.reply(ran+"");
 	}
+	else if(msg.content.startsWith(".계산"))
+	{
+		key = msg.content.replace(".계산 ","");
+		msg.reply(eval(key));
+	}	
 	else if(msg.content.startsWith("."))
 	{
 		if(!(msg.content.replace(/[~!?@#$%^&*().,]/gi, '')==''))
