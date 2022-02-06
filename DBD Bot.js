@@ -78,35 +78,14 @@ function onMessage(msg) {
 	else if(msg.content.startsWith(".미주"))
 	{
 		key = msg.content.split(' ')[1];
-		var resp = org.jsoup.Jsoup.connect('https://search.naver.com/search.naver?query='+key+'%20주가').get();
-		name = resp.select("div.spt_tlt h3 a span.stk_nm").text();
-		price = resp.select("div.spt_tlt h3 a span.spt_con strong").text();
-		variance = resp.select("div.spt_tlt h3 a span.spt_con em");
-
-		if(variance[1] == undefined)
-		{
-			v = variance.text().split(" ")[0];
-			variance = variance.text().split(" ")[1];
-			if(variance[1] == '-') v = '-'+v;
-			else v = '+'+v;
-			msg.reply(name + " : " + price + " " + "(" + v + ", " + variance.substring(1, variance.length-1) + ")");
-		}
-		else
-		{
-			v = variance[0].text();
-			variance = variance[1].text();
-			if(variance[1] != '-')
-			{
-				v = '+'+v;
-				variance = variance.substring(1, variance.length-1);
-				variance = '+' + variance;
-			}
-			else
-			{
-				variance = variance.substring(1, variance.length-1);
-			}
-			msg.reply(name + " : " + price +"$" + " " + "(" + v + "$, "+ variance + ")");
-		}
+		var resp = org.jsoup.Jsoup.connect('https://search.yahoo.com/search?p='+key+'+price').get();
+		name = resp.select("div.grp.grp-sbHeader div div h4 span").text();
+		price = resp.select("div.fin_quotePrice.s-price").text();
+		variance = resp.select("div.fin_delta").text();
+		v = variance.split(" ")[0];
+		v_p = variance.split(" ")[1];
+		v_p = v_p.substring(1, v_p.length-1);
+		msg.reply(name + " : " + price + "$ ("+v+"$, "+v_p+")");
 	}
 	else if(msg.content.startsWith(".코인"))
 	{
